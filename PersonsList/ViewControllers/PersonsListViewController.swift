@@ -14,6 +14,9 @@ class PersonsListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.leftBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
+        
         self.title = "Persons List"
     }
 }
@@ -32,6 +35,12 @@ extension PersonsListViewController {
         cell.textLabel?.text = person.fullName
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let currentPerson = persons.remove(at: sourceIndexPath.row)
+        persons.insert(currentPerson, at: sourceIndexPath.row)
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableView.indexPathForSelectedRow {
